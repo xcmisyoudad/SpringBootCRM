@@ -4,7 +4,7 @@ public class Classes {
 	private Integer classes_Id;// 编号
 	private String classes_Name;// 班级名称
 	private String classes_CreateTime;// 班级创建时间
-	private Integer classes_CounselorId;//班级辅导员编号
+	private String classes_CounselorId;//班级辅导员编号
 	private String classes_SchoolYear;//学年如（五年制、三年制)
 	private String classes_Campus;//校区编号
 	private String classes_Status;//班级状态
@@ -35,13 +35,11 @@ public class Classes {
 		this.classes_CreateTime = classes_CreateTime;
 	}
 
-	
-
-	public Integer getClasses_CounselorId() {
+	public String getClasses_CounselorId() {
 		return classes_CounselorId;
 	}
 
-	public void setClasses_CounselorId(Integer classes_CounselorId) {
+	public void setClasses_CounselorId(String classes_CounselorId) {
 		this.classes_CounselorId = classes_CounselorId;
 	}
 
@@ -85,12 +83,7 @@ public class Classes {
 		this.classes_Exit2 = classes_Exit2;
 	}
 
-	
-	public Classes() {
-		super();
-	}
-
-	public Classes(Integer classes_Id, String classes_Name, String classes_CreateTime, Integer classes_CounselorId,
+	public Classes(Integer classes_Id, String classes_Name, String classes_CreateTime, String classes_CounselorId,
 			String classes_SchoolYear, String classes_Campus, String classes_Status, Integer classes_Exit1,
 			String classes_Exit2) {
 		super();
@@ -103,6 +96,10 @@ public class Classes {
 		this.classes_Status = classes_Status;
 		this.classes_Exit1 = classes_Exit1;
 		this.classes_Exit2 = classes_Exit2;
+	}
+
+	public Classes() {
+		super();
 	}
 
 	@Override

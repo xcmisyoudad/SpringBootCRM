@@ -10,6 +10,7 @@ private Integer follwUp_ClueId;//目标客户id
 private String follwUp_Conclusion;//结论
 private Integer follwUp_Exit1;//预留1
 private String follwUp_Exit2;//预留2
+private Users users;
 public Integer getFollowUp_id() {
 	return followUp_id;
 }
@@ -64,9 +65,15 @@ public String getFollwUp_Exit2() {
 public void setFollwUp_Exit2(String follwUp_Exit2) {
 	this.follwUp_Exit2 = follwUp_Exit2;
 }
+public Users getUsers() {
+	return users;
+}
+public void setUsers(Users users) {
+	this.users = users;
+}
 public FollowUp(Integer followUp_id, String follwUp_Text, String follwUp_Type, String follwUp__Time,
 		Integer follwUp_Principal, Integer follwUp_ClueId, String follwUp_Conclusion, Integer follwUp_Exit1,
-		String follwUp_Exit2) {
+		String follwUp_Exit2, Users users) {
 	super();
 	this.followUp_id = followUp_id;
 	this.follwUp_Text = follwUp_Text;
@@ -77,6 +84,7 @@ public FollowUp(Integer followUp_id, String follwUp_Text, String follwUp_Type, S
 	this.follwUp_Conclusion = follwUp_Conclusion;
 	this.follwUp_Exit1 = follwUp_Exit1;
 	this.follwUp_Exit2 = follwUp_Exit2;
+	this.users = users;
 }
 public FollowUp() {
 	super();
@@ -86,8 +94,9 @@ public String toString() {
 	return "FollowUp [followUp_id=" + followUp_id + ", follwUp_Text=" + follwUp_Text + ", follwUp_Type=" + follwUp_Type
 			+ ", follwUp__Time=" + follwUp__Time + ", follwUp_Principal=" + follwUp_Principal + ", follwUp_ClueId="
 			+ follwUp_ClueId + ", follwUp_Conclusion=" + follwUp_Conclusion + ", follwUp_Exit1=" + follwUp_Exit1
-			+ ", follwUp_Exit2=" + follwUp_Exit2 + "]";
+			+ ", follwUp_Exit2=" + follwUp_Exit2 + ", users=" + users + "]";
 }
+
 
 
 }

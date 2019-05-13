@@ -23,7 +23,7 @@
 	<update id="updateUserPsdWrongTimeSucessByZero"
 		parameterType="com.xcm.entity.Users">
 		UPDATE users SET
-		users_PsdWrongTime=0,users_LastLoginTime=#{users_LastLoginTime}
+		users_PsdWrongTime=0
 		WHERE
 		users_Id=#{users_Id}
 	</update>
@@ -36,4 +36,7 @@
 	<update id="updateUsersChongZhiPassword" parameterType="com.xcm.entity.Users">
 	UPDATE users SET users_Password=#{users_Password} WHERE users_Id=#{users_Id}
 	</update>
+	<select id="getOneUsersById" parameterType="int" resultType="com.xcm.entity.Users">
+	SELECT * FROM users WHERE users_Id=#{id}
+	</select>
 </mapper>

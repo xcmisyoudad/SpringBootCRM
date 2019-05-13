@@ -12,7 +12,8 @@ public class Result {
 	private Boolean success;// 成功状态
 	private String msg;// 写入信息
 	private Integer isLockout;// 用于登录用户是否锁定的状态
-	private Users users;//登录成功以后,存储该用户的对象信息
+	private Users users;
+
 	public Boolean getSuccess() {
 		return success;
 	}

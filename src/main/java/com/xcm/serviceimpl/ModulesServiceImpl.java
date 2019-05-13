@@ -16,16 +16,14 @@ import com.xcm.service.ModulesService;
 public class ModulesServiceImpl implements ModulesService{
 @Autowired
 private ModulesMapper modulesMapper;
-public Map<String,Object> selectLeafNode(Modules modules,Map<String,Object> map){
-	List<Modules> selectLeafNode = modulesMapper.selectLeafNode(modules);
-	return null;
-}
 @Override
-public Map<String, Object> selectByUserId(Integer users_Id) {
-	Map<String,Object> map = new HashMap<String, Object>();
+public List<Map<String,Object>> selectByUserId(Integer users_Id) {
+	List<Map<String,Object>> a = new ArrayList<Map<String,Object>>();
+	
 	List<Modules> list = modulesMapper.selectByUserId(users_Id);//查出来该用户下所有模块
 	for(int i=0;i<list.size();i++) {
 		//说明是顶层节点
+		Map<String,Object> map = new HashMap<String, Object>();
 		if(list.get(i).getModules_ParentId()==0) {
 			//把顶层节点往里面放 查出该节点下面的子节点
 			map.put("id",list.get(i).getModules_Id());
@@ -33,12 +31,16 @@ public Map<String, Object> selectByUserId(Integer users_Id) {
 			map.put("Path", list.get(i).getModules_Path());
 			map.put("ParentId", list.get(i).getModules_ParentId());
 			map.put("Weight", list.get(i).getModules_Weight());
-			map.put("children", test(list.get(i),map));
+			map.put("children", test(list.get(i)));
+		}
+		if(list.get(i).getModules_ParentId()==0) {
+			a.add(map);
 		}
 	}	
-	return map;	
+	
+	return a;	
  }
-	public List<Map<String,Object>> test(Modules modules,Map<String,Object> map) {
+	public List<Map<String,Object>> test(Modules modules) {
 		List<Map<String,Object>> hehe = new ArrayList<Map<String,Object>>();
 		List<Modules> list = modulesMapper.selectLeafNode(modules);//查该模块下下面的子模块
 		Map<String,Object> haha =null;
@@ -52,12 +54,12 @@ public Map<String, Object> selectByUserId(Integer users_Id) {
 				haha.put("Weight", list.get(i).getModules_Weight());
 				//多一个children
 				if(!modulesMapper.selectLeafNode(list.get(i)).toString().equals("[]")) {
-					haha.put("children", test(list.get(i),haha));
+					haha.put("children", test(list.get(i)));
 				}
 				hehe.add(haha);
-				System.out.println(list.get(i).getModules_Id()+"-----"+list.get(i).getModules_ParentId());
 			}
 		}
 		return hehe;
 	}
+
 }

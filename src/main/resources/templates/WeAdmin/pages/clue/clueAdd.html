@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>修改目标学校信息页面</title>
+<link rel="stylesheet" href="/SpringBootCRM/layui/css/layui.css">
+<script type="text/javascript" src="/SpringBootCRM/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/SpringBootCRM/layui/layui.js"></script>
+<script type="text/javascript">
+$(function(){
+	layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  laydate.render({
+    elem: '#clue_CreateTime', //指定元素
+    type: 'datetime'
+  });
+  laydate.render({
+	    elem: '#clue_BginTime', //指定元素
+	    type: 'datetime'
+  });
+  laydate.render({
+	    elem: '#clue_Birthday' //指定元素
+});
+});
+}) 
+function addClue(){
+var from={clue_Id:$("#clue_Id").val(),clue_Name:$("#clue_Name").val(),clue_Sex:$("#clue_Sex").val(),clue_Birthday:$("#clue_Birthday").val(),clue_Email:$("#clue_Email").val(),
+clue_Source:$("#clue_Source").val(),clue_IdentityNumber:$("#clue_IdentityNumber").val(),clue_Qq:$("#clue_Qq").val(),clue_Tel:$("#clue_Tel").val(),
+clue_Address:$("#clue_Address").val(),clue_CreateTime:$("#clue_CreateTime").val(),clue_BginTime:$("#clue_BginTime").val(),clue_Remarks:$('#clue_Remarks').val()
+};
+$.post('/SpringBootCRM/Clue/addClue',from,function(res){
+	if(res.success){
+		alert(res.msg);
+		parent.location.reload();
+	}else{
+		alert(res.msg);
+	}
+},'json')
+}
+</script>
+</head>
+<body style="text-align:center">
+<div style="display:none" class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Id" class="layui-input"></div></div>
+<table class="layui-table">
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>性别</th>
+      <th>出生日期</th>
+      <th>线索来源</th>
+    </tr> 
+  </thead>
+  <tbody>
+    <tr>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Name" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Sex" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Birthday" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Source" class="layui-input"></div></div></td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>QQ</th>
+      <th>电话</th>
+      <th>地区</th>
+      <th>邮箱</th>
+    </tr> 
+  </thead>
+  <tbody>
+    <tr>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Qq" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Tel" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Address" class="layui-input"></div></div></td> 
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_Email" class="layui-input"></div></div></td> 
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+    <th>身份证号</th>
+      <th>创建时间</th>
+      <th>线索开始时间</th>
+    </tr> 
+  </thead>
+  <tbody>
+    <tr>
+    <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_IdentityNumber" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_CreateTime" class="layui-input"></div></div></td>
+      <td><div class="layui-form-item"><div class="layui-input-inline"><input type="text" id="clue_BginTime" class="layui-input"></div></div></td>
+    </tr>
+    <tr height="100">
+    <td>备注</td>
+    <td colspan="4"><textarea id="clue_Remarks" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea></td>
+    </tr> 
+  </tbody>
+</table>
+<button class="layui-btn" onclick="addClue()">提交</button>
+</body>
+</html>

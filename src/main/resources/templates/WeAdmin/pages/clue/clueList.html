@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>目标客户数据页面</title>
+<link rel="stylesheet" href="/SpringBootCRM/layui/css/layui.css">
+<script type="text/javascript" src="/SpringBootCRM/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/SpringBootCRM/layui/layui.js"></script>
+<script type="text/javascript" th:inline="none">
+function addClue(){
+	layui.use('layer',function(){
+		 var layer = layui.layer;
+	 var index=layer.open({
+		  type: 2, 
+		  content: '/SpringBootCRM/Clue/add', //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+		area:['700px','500px']
+	  }); 
+	 layer.full(index);
+	})
+}
+function search(){
+	layui.use(['table','layer'],function(){
+		 var table = layui.table;
+		 table.reload('test', {
+			  url: '/SpringBootCRM/Clue/getPage',
+			  toolbar: 'true'
+			  ,where: {
+				  text1:$("#clue_Name").val(),
+				  text2:$("#clue_Tel").val(),
+				  text3:$("#clue_Qq").val(),
+				  num1:$("#clue_Status").val(),
+				  text4:$("#min").val(),
+				  text5:$("#max").val()
+			  },page:true
+			});
+		 table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+			  var data = obj.data; //获得当前行数据
+			  var layEvent = obj.event; //获得 lay-event 对应的值
+			  if(layEvent === 'detail'){ //查看
+				  layer.open({
+					  type: 2, 
+					  content: '/SpringBootCRM/Clue/clueChaKan/'+data.clue_Id, //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					area:['800px','500px']
+				  }); 
+			  } else if(layEvent === 'del'){ //删除
+			    layer.confirm('真的要放弃改学生吗？', function(index){
+			     $.post('/SpringBootCRM/Clue/fangqi',{id:data.clue_Id},function(res){
+			    	 if(res.success){
+			    		 alert(res.msg);
+			    		 window.location.reload();
+			    	 }else{
+			    		 alert(res.msg);
+			    	 }
+			     },'json')
+			    });
+			  } else if(layEvent === 'edit'){ //编辑
+				  var index=layer.open({
+					  type: 2, 
+					  content: '/SpringBootCRM/Clue/clueUpdate/'+data.clue_Id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				  }); 
+				  layer.full(index);
+			  }else if(layEvent === 'genzong'){ //跟踪
+				 var index=layer.open({
+					  type: 2, 
+					  content: '/SpringBootCRM/Clue/genZong/'+data.clue_Id //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				  }); 
+				 layer.full(index);
+			  }else if(layEvent === 'addDynamic'){ //添加动态信息
+					var index= layer.open({
+						  type: 2, 
+						  content: '/SpringBootCRM/Clue/dynamic/'+data.clue_Principal //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  }); 
+			  layer.full(index);
+				  }
+			});
+	})
+}
+$(function(){
+	search();
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  laydate.render({
+		    elem: '#min' //指定元素
+		  });
+		  laydate.render({
+			    elem: '#max' //指定元素
+			  });
+		});
+})
+</script>
+<script type="text/html" id="barDemo">
+       <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+       <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">放弃</a>
+       <a class="layui-btn layui-btn-xs" lay-event="genzong">跟踪</a>
+       <a class="layui-btn layui-btn-xs" lay-event="addDynamic">添加动态</a>
+</script>
+<script type="text/html" id="status">
+{{#  if(d.clue_Status==0){ }}
+    未分配
+  {{#  } else if(d.clue_Status==1){ }}
+    正在跟进
+  {{#  } else if(d.clue_Status==2){ }}
+已放弃
+{{# } else if(d.clue_Status==3){}}
+已成为学员
+{{# } }}
+</script>
+</head>
+<body>
+<div class="layui-form">
+<div class="layui-form-item">
+    <label class="layui-form-label">姓名：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="name" id="clue_Name" placeholder="请输入姓名" class="layui-input">
+    </div>
+    <label class="layui-form-label">电话：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="tel" id="clue_Tel" placeholder="请输入电话" class="layui-input">
+    </div>
+    <label class="layui-form-label">QQ：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="title" id="clue_Qq" placeholder="请输入QQ" class="layui-input">
+    </div>
+     <label class="layui-form-label">状态：</label>
+    <div class="layui-input-inline">
+     <select id="clue_Status">
+        <option value=""></option>
+        <option value="0">未分配</option>
+        <option value="1">正在跟进</option>
+        <option value="2">已放弃</option>
+        <option value="3">已成为学员</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">创建时间</label>
+    <div class="layui-input-inline">
+      <input type="text" name="" id="min" placeholder="请输入开始时间" class="layui-input">
+    </div>
+    <label class="layui-form-label">~</label>
+     <div class="layui-input-inline">
+      <input type="text" name="title" id="max"  placeholder="请输入结束时间" class="layui-input">
+    </div>
+     <div class="layui-input-inline">
+      <button class="layui-btn" onclick="search()" lay-submit lay-filter="formDemo">搜索</button>
+     <button class="layui-btn" onclick="addClue()"><i class="layui-icon">&#xe608;</i> 添加</button>
+    </div>
+  </div>
+  </div>
+<table class="layui-table" lay-data="{id:'test'}" lay-filter="test" title="学生信息">
+  <thead>
+    <tr>
+      <th lay-data="{field:'clue_Id',align:'center',sort: true}">ID</th>
+      <th lay-data="{field:'clue_Name',align:'center'}">姓名</th>
+      <th lay-data="{field:'clue_Sex',sort: true,align:'center'}">性别</th>
+      <th lay-data="{field:'clue_Birthday',align:'center'}">出生日期</th>
+      <th lay-data="{field:'clue_Source',align:'center'}">来源方式</th>
+      <th lay-data="{field:'clue_Tel',sort: true,align:'center'}">电话</th>
+      <th lay-data="{field:'clue_Address',sort: true,align:'center'}">地址</th>
+      <th lay-data="{field:'clue_Qq',align:'center',hide:true}">QQ</th>
+      <th lay-data="{field:'clue_Status',templet:'#status',align:'center'}">状态</th>
+      <th lay-data="{field:'clue_Principal',sort: true,templet:'<div>{{d.users.users_LoginName}}</div>',align:'center'}">咨询师</th>
+      <th lay-data="{fixed: 'right',width:'280',align:'center', toolbar: '#barDemo'}">操作</th>
+    </tr>
+  </thead>
+</table>
+</body>
+</html>

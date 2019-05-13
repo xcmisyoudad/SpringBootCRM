@@ -11,7 +11,7 @@ spring:
             enable: true
             required: true
   thymeleaf:
-    mode: HTML5
+    mode: HTML
     encoding: UTF-8
     content-type: text/html
     cache: false

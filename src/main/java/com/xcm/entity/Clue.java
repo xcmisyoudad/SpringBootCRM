@@ -1,4 +1,6 @@
 package com.xcm.entity;
+
+
 //线索表
 public class Clue {
 private Integer clue_Id;//编号
@@ -12,7 +14,7 @@ private String clue_Qq;//QQ
 private String clue_Tel;//电话
 private String clue_Address;//地区
 private Integer clue_Principal;//负责人(咨询师)
-private String clue_Creator;//创建人(网络咨询师)
+private Integer clue_Creator;//创建人(网络咨询师)
 private String clue_CreateTime;//创建时间
 private String clue_UpdateTime;//更新时间
 private String clue_BginTime;//线索开始时间
@@ -21,6 +23,7 @@ private String clue_Remarks;//备注
 private Integer clue_Status;//状态(默认为0,0:未分配1:正在跟进,2:已放弃,3:已成为学员)
 private Integer clue_Exit1;//预留1
 private String clue_Exit2;//预留2
+private Users users;
 public Integer getClue_Id() {
 	return clue_Id;
 }
@@ -87,10 +90,11 @@ public Integer getClue_Principal() {
 public void setClue_Principal(Integer clue_Principal) {
 	this.clue_Principal = clue_Principal;
 }
-public String getClue_Creator() {
+
+public Integer getClue_Creator() {
 	return clue_Creator;
 }
-public void setClue_Creator(String clue_Creator) {
+public void setClue_Creator(Integer clue_Creator) {
 	this.clue_Creator = clue_Creator;
 }
 public String getClue_CreateTime() {
@@ -142,11 +146,21 @@ public void setClue_Exit2(String clue_Exit2) {
 	this.clue_Exit2 = clue_Exit2;
 }
 
+
+public Users getUsers() {
+	return users;
+}
+public void setUsers(Users users) {
+	this.users = users;
+}
+
+
+
 public Clue(Integer clue_Id, String clue_Name, String clue_Sex, String clue_Birthday, String clue_Source,
 		String clue_IdentityNumber, String clue_Email, String clue_Qq, String clue_Tel, String clue_Address,
-		Integer clue_Principal, String clue_Creator, String clue_CreateTime, String clue_UpdateTime,
+		Integer clue_Principal, Integer clue_Creator, String clue_CreateTime, String clue_UpdateTime,
 		String clue_BginTime, String clue_EndTime, String clue_Remarks, Integer clue_Status, Integer clue_Exit1,
-		String clue_Exit2) {
+		String clue_Exit2, Users users) {
 	super();
 	this.clue_Id = clue_Id;
 	this.clue_Name = clue_Name;
@@ -168,8 +182,8 @@ public Clue(Integer clue_Id, String clue_Name, String clue_Sex, String clue_Birt
 	this.clue_Status = clue_Status;
 	this.clue_Exit1 = clue_Exit1;
 	this.clue_Exit2 = clue_Exit2;
+	this.users = users;
 }
-
 public Clue() {
 	super();
 }
@@ -181,7 +195,7 @@ public String toString() {
 			+ clue_Address + ", clue_Principal=" + clue_Principal + ", clue_Creator=" + clue_Creator
 			+ ", clue_CreateTime=" + clue_CreateTime + ", clue_UpdateTime=" + clue_UpdateTime + ", clue_BginTime="
 			+ clue_BginTime + ", clue_EndTime=" + clue_EndTime + ", clue_Remarks=" + clue_Remarks + ", clue_Status="
-			+ clue_Status + ", clue_Exit1=" + clue_Exit1 + ", clue_Exit2=" + clue_Exit2 + "]";
+			+ clue_Status + ", clue_Exit1=" + clue_Exit1 + ", clue_Exit2=" + clue_Exit2 + ", users=" + users + "]";
 }
 
 }

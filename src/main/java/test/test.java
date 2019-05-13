@@ -2,8 +2,6 @@ package test;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,7 +19,7 @@ import com.xcm.util.PasswordEncrypt;
 public class test {
 //    @Autowired
 //    private static JavaMailSender mailSender;
-	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException, ParseException {
+	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 //		
 //		List<Map> li = new ArrayList<Map>();
 //		Map<String,Object> map=new HashMap<String,Object>();
@@ -78,35 +76,5 @@ public class test {
 //	        message.setSubject("主题：简单邮件");
 //	        message.setText("测试邮件内容");
 //	        mailSender.send(message);
-//        Date date = new Date();
-//        //设置要获取到什么样的时间
-//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-//        String startTime="8:00";
-//        String endTime="11:24";
-//        //获取String类型的时间
-//        String createdate = sdf.format(date);
-//        System.out.println(createdate);
-//        Date date1 = sdf.parse(startTime);
-//        Date date2 = sdf.parse(endTime);
-//        int compareTo = date1.compareTo(date2);
-//
-//        System.out.println(compareTo);
-		
-		Date date = new Date();
-		// 设置要获取到什么样的时间
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
-		// 获取String类型的时间
-		String createdate = sdf.format(date);
-		// 默认上班时间为八点
-		String startTime = "8:00";
-		// 根据当前时间的时和分判断谁大谁小
-		String endTime = sdf2.format(date);
-		Date date1 = sdf2.parse(startTime);
-		Date date2 = sdf2.parse(endTime);
-		int compareTo = date1.compareTo(date2);
-		System.out.println(compareTo);
 	}
-
-
 }

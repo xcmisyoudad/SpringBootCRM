@@ -1,5 +1,6 @@
 package com.xcm.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.xcm.entity.Modules;
@@ -10,5 +11,5 @@ public interface ModulesService {
 	 * @param users_Id
 	 * @return
 	 */
-	public Map<String,Object> selectByUserId(Integer users_Id);
+	public List<Map<String,Object>> selectByUserId(Integer users_Id);
 }

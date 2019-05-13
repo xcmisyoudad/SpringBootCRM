@@ -29,7 +29,7 @@ public interface UsersMapper {
 	public Integer updateUsersLockout(Users users);
 
 	/**
-	 * 用户登录成功后修改失败次数为初始值(0)的方法,以及修改最后登录时间
+	 * 用户登录成功后修改失败次数为初始值(0)的方法
 	 * 
 	 * @param users
 	 * @return
@@ -50,4 +50,11 @@ public interface UsersMapper {
 	 * @return
 	 */
 	public Integer updateUsersChongZhiPassword(Users users);
+	/**
+	 * 通过用户Id查询单条信息
+	 * @param Integer
+	 * @return
+	 */
+	public Users getOneUsersById(Integer id);
+	
 }

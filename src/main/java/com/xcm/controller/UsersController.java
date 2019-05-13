@@ -3,7 +3,6 @@ package com.xcm.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,58 +19,28 @@ import com.xcm.util.Result;
 public class UsersController {
 	@Autowired
 	private UsersService usersService;
-	/**
-	 * 本方法是控制层判断前台用户登录的唯一方法
-	 * @param users 前台用户名密码自动交给spring拼成users对象
-	 * @param model 模型用于添加数据显示
-	 * @param request 用来操作处理session
-	 * @param yanZhengMa 前台输入的验证码
-	 * @return 页面路径地址为String类型
-	 * @throws NoSuchAlgorithmException
-	 * @throws UnsupportedEncodingException
-	 */
 	@RequestMapping("login")
-	public String login(Users users, Model model, HttpServletRequest request,String yanZhengMa) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public String login(Users users, Model model, HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		Result result = usersService.selectUsers(users);
-		HttpSession session = request.getSession();
-		//从session中得到验证码是多少
-		String piccode=(String) session.getAttribute("piccode");
-		//有可能第一次访问没有输入验证码加上非空判断
-		if(yanZhengMa==null) {
+		System.out.println(result);
+		if (result.getSuccess()) {
+			if (result.getIsLockout() == 1) {
+				System.out.println(users);
+				HttpSession session = request.getSession();
+				session.setAttribute("users", users);
+				session.setAttribute("usersId", result.getUsers().getUsers_Id());
+				model.addAttribute("users", result.getUsers());
+				return "WeAdmin/index";
+			} else {
+				model.addAttribute("msg", result.getMsg());
+				return "WeAdmin/login";
+			}
+
+		} else {
 			model.addAttribute("msg", result.getMsg());
 			return "WeAdmin/login";
 		}
-		else {
-			//接着判断是否前台验证码是否和后台一样
-			if(piccode.equals(yanZhengMa)) {
-				System.out.println(result);
-				//如果一样直接拿到是否登录的辅助类信息
-				if (result.getSuccess()) {
-					//如果该账户也未曾锁定
-					if (result.getIsLockout() == 1) {
-						//将该用户信息写入session中,跳转页面
-						System.out.println(users);
-						session.setAttribute("users", result.getUsers());
-						model.addAttribute("users", result.getUsers());
-						return "WeAdmin/index";
-					} else {
-						//否则就说明被锁定,返回登录页面,并输出提示信息
-						model.addAttribute("msg", result.getMsg());
-						return "WeAdmin/login";
-					}
 
-				} else {
-					//否则就失败了状态为false,就代表可能密码输入错误,返回登录页面
-					model.addAttribute("msg", result.getMsg());
-					return "WeAdmin/login";
-				}
-			}
-			else {
-				//如果验证码不正确,返回登录页面
-				model.addAttribute("msg", "验证码输入错误");
-				return "WeAdmin/login";
-			}
-		}
 	}
 
 	// 供前台layui拿到welcome页面
@@ -171,14 +140,5 @@ public class UsersController {
 	public Boolean updateChongZhiPassword(Users users) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		Boolean jieGuo=usersService.updateUsersChongZhiPassword(users);
 		return jieGuo;
-	}
-	/**
-	 * 前台调用生成验证码图片的方法
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("code")
-	public void code(HttpServletRequest request,HttpServletResponse response) {
-		usersService.code(request, response);
 	}
 }

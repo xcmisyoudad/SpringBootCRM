@@ -27,15 +27,8 @@ layui.use('element', function(){
 });
 
 $(function (){
-	
 	var users_Id=$('#users_Id').text();
 	$.post("selectModules", {users_Id:users_Id}, function(res) {
-		if(!res.pd){
-			res = [];
-		} else{
-			res = [ res ];
-		}
-		console.log(res.pd);
 		layui.use('tree', function() {
 			layui.tree({
 				elem : '#nav', //传入元素选择器			
@@ -46,7 +39,7 @@ $(function (){
 						if(exist < 1){
 							element.tabAdd('demo', {
 						  		title:  ''+ node.name +''
-						  		,content: "<iframe id='iframe' src=' "+ node.Path +"' style='width:100%' frameborder='0' scrolling='yes'></iframe>" //支持传入html
+						  		,content: "<iframe id='iframe' src=' "+ node.Path +"' style='width:100%;margin-top:20px' frameborder='0' scrolling='yes'></iframe>" //支持传入html
 						  		,id: '' + node.id + ''
 							}); 
 							element.tabChange('demo', '' + node.id + ''); 
@@ -60,30 +53,12 @@ $(function (){
 		});
 	}, "json");
 
-});
-
-function checkIn(){
-	var users_Id=$('#users_Id').text();
-	$.post('/SpringBootCRM/updateCheckInByUsers',{
-		users_Id:users_Id
-	},function(res){
-		if(res==1){
-			alert('签到成功');
-		}
-		else if(res==2){
-			alert('签到失败');
-		}
-		else if(res==3){
-			alert('已经签到,请勿重复签到');
-		}
-	},'json');
-}
+})
 </script>
 	</head>
 
 	<body>
 		<!-- 顶部开始 -->
-		
 		<div class="container">
 			<div class="logo">
 				<a href="./index.html">熊出没CRM系统</a>
@@ -112,7 +87,7 @@ function checkIn(){
 			</ul>
 			<ul class="layui-nav right" lay-filter="">
 				<li class="layui-nav-item">
-					<a href="javascript:;"><span th:text="${users.users_LoginName}"></span></a>
+					<a href="javascript:;">Admin</a>
 					<dl class="layui-nav-child">
 						<!-- 二级菜单 -->
 						<dd>
@@ -120,9 +95,6 @@ function checkIn(){
 						</dd>
 						<dd>
 							<a onclick="WeAdminShow('切换帐号','./login.html')">切换帐号</a>
-						</dd>
-						<dd>
-							<a onclick="checkIn()">签到</a>
 						</dd>
 						<dd>
 							<a class="loginout" href="./login.html">退出</a>

@@ -1,0 +1,17 @@
+2019-04-24 11:22:34.009 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting App on DESKTOP-CR592KM with PID 8720 (E:\eclipse-workspace\SpringBootCRM\target\classes started by ChirsGod in E:\eclipse-workspace\SpringBootCRM)
+2019-04-24 11:22:34.018 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to default profiles: default
+2019-04-24 11:22:35.161 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port(s): 8080 (http)
+2019-04-24 11:22:35.174 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2019-04-24 11:22:35.182 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2019-04-24 11:22:35.182 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-24 11:22:35.277 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2019-04-24 11:22:35.277 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1170 ms
+2019-04-24 11:22:35.335 - INFO  [           main] a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-04-24 11:22:35.671 - INFO  [           main] c.a.d.p.DruidDataSource        : {dataSource-1} inited
+2019-04-24 11:22:36.041 - INFO  [           main] c.ExecutorConfigurationSupport : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-24 11:22:36.276 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2019-04-24 11:22:36.300 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port(s): 8080 (http) with context path '/SpringBootCRM'
+2019-04-24 11:22:36.303 - INFO  [           main] o.s.b.StartupInfoLogger        : Started App in 2.673 seconds (JVM running for 4.645)
+2019-04-24 11:22:42.749 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-04-24 11:22:42.749 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2019-04-24 11:22:42.755 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 6 ms

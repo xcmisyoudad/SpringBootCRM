@@ -1,0 +1,14 @@
+2019-04-24 11:39:05.076 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting App on DESKTOP-CR592KM with PID 13560 (E:\eclipse-workspace\SpringBootCRM\target\classes started by ChirsGod in E:\eclipse-workspace\SpringBootCRM)
+2019-04-24 11:39:05.090 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to default profiles: default
+2019-04-24 11:39:05.931 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port(s): 8080 (http)
+2019-04-24 11:39:05.939 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2019-04-24 11:39:05.945 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2019-04-24 11:39:05.946 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-24 11:39:06.035 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2019-04-24 11:39:06.036 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 901 ms
+2019-04-24 11:39:06.092 - INFO  [           main] a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-04-24 11:39:06.301 - INFO  [           main] c.a.d.p.DruidDataSource        : {dataSource-1} inited
+2019-04-24 11:39:06.595 - INFO  [           main] c.ExecutorConfigurationSupport : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-24 11:39:06.849 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2019-04-24 11:39:06.863 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port(s): 8080 (http) with context path '/SpringBootCRM'
+2019-04-24 11:39:06.865 - INFO  [           main] o.s.b.StartupInfoLogger        : Started App in 1.96 seconds (JVM running for 2.912)

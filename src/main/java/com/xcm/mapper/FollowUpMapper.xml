@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.xcm.mapper.FollowUpMapper">
+   <resultMap type="com.xcm.entity.FollowUp" id="myMap">
+  <id property="followUp_id" column="followUp_id"/>
+  <result property="follwUp_Text" column="follwUp_Text"/>
+  <result property="follwUp_Type" column="follwUp_Type"/>
+  <result property="follwUp__Time" column="follwUp__Time"/>
+  <result property="follwUp_Principal" column="follwUp_Principal"/>
+  <result property="follwUp_ClueId" column="follwUp_ClueId"/>
+  <result property="follwUp_Conclusion" column="follwUp_Conclusion"/>
+  <result property="follwUp_Exit1" column="follwUp_Exit1"/>
+  <result property="follwUp_Exit2" column="follwUp_Exit2"/>
+  <association property="users">
+  <result property="users_LoginName" column="users_LoginName"/>
+  </association>
+  </resultMap>
+  <insert id="genZongClue" parameterType="com.xcm.entity.FollowUp">
+  INSERT INTO followup (follwUp_Text,follwUp_Type,follwUp__Time,follwUp_Principal,follwUp_ClueId,follwUp_Conclusion) VALUES (#{follwUp_Text},
+  #{follwUp_Type},#{follwUp__Time},#{follwUp_Principal},#{follwUp_ClueId},#{follwUp_Conclusion})
+  </insert>
+  <select id="getFollowUpByClueId" parameterType="com.xcm.entity.PageNation" resultMap="myMap">
+  SELECT f.*,u.users_LoginName FROM followup f,users u WHERE f.follwUp_Principal=u.users_Id and follwUp_ClueId=#{num1} 
+  <if test="text1!=null and text1!=''">
+  and f.follwUp_Type like '%${text1}%'
+  </if>
+   limit #{start},#{limit}
+  </select>
+    <select id="getFollowUpCountByClueId" parameterType="com.xcm.entity.PageNation" resultType="int">
+  SELECT count(*) FROM followup f,users u WHERE f.follwUp_Principal=u.users_Id and follwUp_ClueId=#{num1} 
+  <if test="text1!=null and text1!=''">
+ and f.follwUp_Type like '%${text1}%'
+  </if>
+  </select>
+  </mapper>

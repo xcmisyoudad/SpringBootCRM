@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.xcm.mapper.ClueMapper">
+  <resultMap type="com.xcm.entity.Clue" id="myMap">
+  <id property="clue_Id" column="clue_Id"/>
+  <result property="clue_Name" column="clue_Name"/>
+  <result property="clue_Sex" column="clue_Sex"/>
+  <result property="clue_Birthday" column="clue_Birthday"/>
+  <result property="clue_Source" column="clue_Source"/>
+  <result property="clue_IdentityNumber" column="clue_IdentityNumber"/>
+  <result property="clue_Email" column="clue_Email"/>
+  <result property="clue_Qq" column="clue_Qq"/>
+  <result property="clue_Tel" column="clue_Tel"/>
+  <result property="clue_Address" column="clue_Address"/>
+  <result property="clue_Principal" column="clue_Principal"/>
+  <result property="clue_Creator" column="clue_Creator"/>
+  <result property="clue_CreateTime" column="clue_CreateTime"/>
+  <result property="clue_UpdateTime" column="clue_UpdateTime"/>
+  <result property="clue_BginTime" column="clue_BginTime"/>
+  <result property="clue_EndTime" column="clue_EndTime"/>
+  <result property="clue_Remarks" column="clue_Remarks"/>
+  <result property="clue_Status" column="clue_Status"/>
+  <association property="users">
+  <id property="users_Id" column="users_Id"/>
+  <result property="users_LoginName" column="users_LoginName"/>
+  </association>
+  </resultMap>
+  <select id="getPageByUserId" parameterType="com.xcm.entity.PageNation" resultMap="myMap">
+  SELECT * FROM clue c,users u WHERE clue_Principal=#{num1} and c.clue_Principal=u.users_Id
+  <if test="text1!=null and text1!=''">
+  and c.clue_Name like "%${text1}%"
+  </if>
+   <if test="text2!=null and text2!=''">
+  and c.clue_Tel=#{text2}
+  </if>
+   <if test="text3!=null and text3!=''">
+  and c.clue_Qq=#{text3}
+  </if>
+   <if test="num2!=null and num2!=''">
+  and c.clue_Status=#{num2}
+  </if>
+   <if test="text4!=null and text4!='' and text5!=null and text5!=''">
+  and c.clue_Birthday between #{text4} and #{text5}
+  </if>
+   <if test="text4!=null and text4!='' and text5==null and text5==''">
+  and c.clue_Birthday>=#{text4}
+  </if>
+   <if test="text5!=null and text5!='' and text4==null and text4==''">
+ and c.clue_Birthday &lt;=#{text5}
+  </if>
+   limit #{start},#{limit}
+  </select>
+   <select id="getCountByUserId" parameterType="com.xcm.entity.Clue" resultType="int">
+  SELECT count(*) FROM clue c,users u WHERE clue_Principal=#{num1} and c.clue_Principal=u.users_Id
+    <if test="text1!=null and text1!=''">
+  and c.clue_Name like "%${text1}%"
+  </if>
+   <if test="text2!=null and text2!=''">
+  and c.clue_Tel=#{text2}
+  </if>
+   <if test="text3!=null and text3!=''">
+  and c.clue_Qq=#{text3}
+  </if>
+   <if test="num2!=null and num2!=''">
+  and c.clue_Status=#{num2}
+  </if>
+   <if test="text4!=null and text4!='' and text5!=null and text5!=''">
+  and c.clue_Birthday between #{text4} and #{text5}
+  </if>
+   <if test="text4!=null and text4!='' and text5==null and text5==''">
+  and c.clue_Birthday>=#{text4}
+  </if>
+   <if test="text5!=null and text5!='' and text4==null and text4==''">
+ and c.clue_Birthday &lt;=#{text5}
+  </if>
+  </select>
+  <select id="getOneClueById" parameterType="int" resultMap="myMap">
+  SELECT * FROM clue c,users u WHERE c.clue_Principal=u.users_Id and c.clue_Id=#{id}
+  </select>
+  <update id="updateClue" parameterType="com.xcm.entity.Clue">
+  UPDATE clue SET clue_Name=#{clue_Name},clue_Sex=#{clue_Sex},clue_Birthday=#{clue_Birthday},clue_Source=#{clue_Source},
+  clue_IdentityNumber=#{clue_IdentityNumber},clue_Email=#{clue_Email},clue_Qq=#{clue_Qq},clue_Tel=#{clue_Tel},clue_Address=#{clue_Address},
+  clue_UpdateTime=#{clue_UpdateTime},clue_Remarks=#{clue_Remarks} where clue_Id=#{clue_Id}
+  </update>
+   <update id="fangQiClue" parameterType="int">
+   UPDATE clue SET clue_Status=0,clue_Principal=0 where clue_Id=#{id}
+   </update>
+   <insert id="addClue" parameterType="com.xcm.entity.Clue">
+   INSERT INTO clue (clue_Name,clue_Sex,clue_Birthday,clue_Source,clue_IdentityNumber,clue_Email,clue_Qq,clue_Tel,clue_Address,clue_Principal,
+   clue_Creator,clue_CreateTime,clue_BginTime,clue_Remarks,clue_Status) VALUES (#{clue_Name},#{clue_Sex},#{clue_Birthday},#{clue_Source},
+   #{clue_IdentityNumber},#{clue_Email},#{clue_Qq},#{clue_Tel},#{clue_Address},0,#{clue_Creator},#{clue_CreateTime},
+   #{clue_BginTime},#{clue_Remarks},0)
+   </insert>
+  </mapper>

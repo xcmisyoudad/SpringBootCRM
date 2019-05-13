@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.xcm.mapper.DynamicMapper">
+  <resultMap type="com.xcm.entity.Dynamic" id="myMap">
+  <id property="dynamic_Id" column="dynamic_Id"/>
+  <result property="dynamic_Text" column="dynamic_Text"/>
+  <result property="dynamic_CreateTime" column="dynamic_CreateTime"/>
+  <result property="dynamic_Status" column="dynamic_Status"/>
+  <association property="users" javaType="com.xcm.entity.Users">
+  <id property="users_Id" column="users_Id"/>
+  <result property="users_LoginName" column="users_LoginName"/>
+  </association>
+  </resultMap>
+  <insert id="addDynamic" parameterType="com.xcm.entity.Dynamic">
+  INSERT INTO dynamic (dynamic_Text,dynamic_Creator,dynamic_Recipients,dynamic_CreateTime,dynamic_Status) VALUES (#{dynamic_Text},
+  #{dynamic_Creator},#{dynamic_Recipients},#{dynamic_CreateTime},0)
+  </insert>
+  <select id="getDynamicByCreator" parameterType="com.xcm.entity.PageNation" resultMap="myMap">
+  select * from dynamic d,users u where d.dynamic_Recipients=u.users_Id and dynamic_Creator=#{num1} limit #{start},#{limit}
+  </select>
+  <select id="getCountByCreator" parameterType="com.xcm.entity.PageNation" resultType="int">
+  select count(*) from dynamic d where dynamic_Creator=#{num1}
+  </select>
+  </mapper>
