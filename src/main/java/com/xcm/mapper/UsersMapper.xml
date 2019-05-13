@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcm.mapper.UsersMapper">
+	<select id="selectUsers" parameterType="com.xcm.entity.Users"
+		resultType="com.xcm.entity.Users">
+		SELECT * FROM users WHERE
+		users_LoginName=#{users_LoginName} AND
+		users_Password=#{users_Password}
+	</select>
+	<select id="selectUsersByUsersName"
+		parameterType="com.xcm.entity.Users" resultType="com.xcm.entity.Users">
+		SELECT * FROM users
+		WHERE users_LoginName=#{users_LoginName}
+	</select>
+	<update id="updateUsersLockout"
+		parameterType="com.xcm.entity.Users">
+		UPDATE users SET
+		users_PsdWrongTime=#{users_PsdWrongTime},users_LsLockout=#{users_LsLockout}
+		WHERE users_Id=#{users_Id}
+	</update>
+	<update id="updateUserPsdWrongTimeSucessByZero"
+		parameterType="com.xcm.entity.Users">
+		UPDATE users SET
+		users_PsdWrongTime=0,users_LastLoginTime=#{users_LastLoginTime}
+		WHERE
+		users_Id=#{users_Id}
+	</update>
+	<select id="selectUsersByUsersEmail" parameterType="com.xcm.entity.Users" resultType="com.xcm.entity.Users">
+		SELECT * FROM users
+		WHERE users_LoginName=#{users_LoginName} AND
+		users_ProTectEMail=#{users_ProTectEMail} AND
+		users_ProtectTel=#{users_ProtectTel}
+	</select>
+	<update id="updateUsersChongZhiPassword" parameterType="com.xcm.entity.Users">
+	UPDATE users SET users_Password=#{users_Password} WHERE users_Id=#{users_Id}
+	</update>
+</mapper>

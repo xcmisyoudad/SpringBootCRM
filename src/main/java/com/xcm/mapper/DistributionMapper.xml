@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcm.mapper.DistributionMapper">
+	<select id="selectDistributionByUsersId" parameterType="int"
+		resultType="com.xcm.entity.Distribution">
+		SELECT * FROM distribution WHERE
+		distribution_UsersId=#{distribution_UsersId}
+	</select>
+	<update id="updateDistributionStatus" parameterType="com.xcm.entity.Distribution">
+	UPDATE distribution SET distribution_Status=#{distribution_Status} WHERE distribution_UsersId=#{distribution_UsersId}
+	</update>
+</mapper>

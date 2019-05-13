@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.xcm.mapper.ModulesMapper">
+  <select id="selectByUserId" parameterType="Integer" resultType="com.xcm.entity.Modules">
+SELECT * FROM modules WHERE modules_Id IN (
+SELECT permissiontb_ModuleId FROM permissiontb WHERE permissiontb_Id IN(
+SELECT rolePermissiontb_PermissionId FROM rolepermissiontb WHERE rolePermissiontb_RoleId IN(
+SELECT roles_Id FROM roles WHERE  roles_Id  IN( 
+SELECT usersRoles_RoleId FROM usersroles WHERE usersRoles_UserId=#{usersRoles_UserId}))))
+  </select>
+  
+  <select id="selectLeafNode" parameterType="com.xcm.entity.Modules" resultType="com.xcm.entity.Modules">
+  	SELECT * FROM `modules` WHERE modules_Id != 0 AND modules_ParentId = #{modules_Id}
+  </select>
+  </mapper>

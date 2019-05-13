@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>管理员登录-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="/SpringBootCRM/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/SpringBootCRM/css/font.css">
+	<link rel="stylesheet" href="/SpringBootCRM/css/weadmin.css">
+	<script type="text/javascript" src="/SpringBootCRM/js/jquery-1.8.2.min.js"></script>
+    <script src="/SpringBootCRM/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+    function tiJiao(){
+    	layui.use('layer', function(){
+    		  var layer = layui.layer;
+    		  layer.open({
+    			  type: 2, 
+    			  content: '/SpringBootCRM/passwordZhaoHui',
+    			  area: ['500px', '500px']
+    			}); 
+    		}); 
+    }
+    function code(a){
+		 var timestamp = (new Date()).valueOf();
+        $(a).attr("src","/SpringBootCRM/code?timestamp="+timestamp );
+	}
+
+    </script>
+
+</head>
+<body class="login-bg">
+    
+    <div class="login">
+        <div class="message">熊出没CRM系统登录</div>
+        <div id="darkbannerwrap"></div>
+        
+        <form class="layui-form" action="/SpringBootCRM/login" method="post" autocomplete="off">
+        <span th:utext="${msg}"></span>
+            <input name="users_LoginName" id="users_LoginName" lay-verify="required" placeholder="用户名"  type="text"  class="layui-input" >
+            <hr class="hr15">
+            <input name="users_Password" id="users_Password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <hr class="hr15">
+             <input name="yanZhengMa" id="yanZhengMa" lay-verify="required" placeholder="请输入验证码"  type="text" class="layui-input">
+            <div class="layui-form-mid layui-word-aux"><img style="" id="tu" onclick="code(this)" alt="" src="/SpringBootCRM/code" />
+</div>
+            <hr class="hr15">
+            <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20" >
+        </form>
+    </div>
+
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(login)', function(data){
+    layer.msg(JSON.stringify(data.field));
+  });
+});
+</script>
+    <!-- 底部结束 -->
+</body>
+</html>

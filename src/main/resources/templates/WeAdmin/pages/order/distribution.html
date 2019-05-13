@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>动态分配管理</title>
+<link rel="stylesheet" href="/SpringBootCRM/layui/css/layui.css">
+<script type="text/javascript"
+	src="/SpringBootCRM/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/SpringBootCRM/layui/layui.js"></script>
+<script type="text/javascript" th:inline="none">
+	$(function() {
+		$.post('/SpringBootCRM/selectDistributionByUsersId', {
+			distribution_UsersId : $('#distribution_UsersId').val()
+		}, function(res) {
+			if (res.distribution_Status == 1) {
+				$("input:checkbox[name='switch']").removeAttr("checked");
+			} else {
+				$("input:checkbox[name='switch']").attr("checked", true);
+			}
+		}, 'json');
+	});
+</script>
+</head>
+<body>
+	<div class="layui-form-item" style="display: none;">
+		<label class="layui-form-label">id</label>
+		<div class="layui-input-block">
+			<input type="text" name="distribution_UsersId"
+				id="distribution_UsersId" th:value="${session.users.users_Id}">
+		</div>
+	</div>
+	<form class="layui-form">
+		<div class="layui-form-item">
+			<label class="layui-form-label">开关</label>
+			<div class="layui-input-block">
+				<input type="checkbox" id="switch" name="switch" lay-skin="switch"
+					lay-filter="switchTest" lay-text="开|关">
+			</div>
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+	layui.use('form', function() {
+		var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+		//……
+
+		//但是，如果你的HTML是动态生成的，自动渲染就会失效
+		//因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+		form.render();
+		form.on('switch(switchTest)', function(data) {
+			if (this.checked) {
+				$.post('/SpringBootCRM/updateDistributionStatus', {
+					distribution_UsersId : $('#distribution_UsersId').val(),
+					distribution_Status : 2
+				}, function(res) {
+					if (res) {
+						alert('开启成功');
+					}
+					else{
+						alert('开启失败');
+					}
+				}, 'json');
+			} else {
+				$.post('/SpringBootCRM/updateDistributionStatus', {
+					distribution_UsersId : $('#distribution_UsersId').val(),
+					distribution_Status : 1
+				}, function(res) {
+					if (res) {
+						alert('关闭成功');
+					}
+					else{
+						alert('关闭失败');
+					}
+				}, 'json');
+			}
+			/* 		    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+			 offset: '6px'
+			 }); */
+		});
+	});
+</script>
+</html>

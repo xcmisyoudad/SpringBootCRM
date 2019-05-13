@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcm.mapper.CheckinMapper">
+	<resultMap type="com.xcm.entity.CheckIn" id="checkinMap">
+		<id property="checkIn_Id" column="checkIn_Id" />
+		<result property="checkIn_UserId" column="checkIn_UserId" />
+		<result property="checkIn_Time" column="checkIn_Time" />
+		<result property="checkIn_EndTime" column="checkIn_EndTime" />
+		<result property="checkIn_Status" column="checkIn_Status" />
+		<result property="checkIn_WorkingHours" column="checkIn_WorkingHours" />
+		<result property="checkIn_Late" column="checkIn_Late" />
+		<result property="checkIn_Exit1" column="checkIn_Exit1" />
+		<result property="checkIn_Exit2" column="checkIn_Exit2" />
+		<association property="users" javaType="com.xcm.entity.Users">
+			<id property="users_Id" column="users_Id" />
+			<result property="users_LoginName" column="users_LoginName" />
+			<result property="users_Password" column="users_Password" />
+			<result property="users_LsLockout" column="users_LsLockout" />
+			<result property="users_LastLoginTime" column="users_LastLoginTime" />
+			<result property="users_CreateTime" column="users_CreateTime" />
+			<result property="users_PsdWrongTime" column="users_PsdWrongTime" />
+			<result property="users_LockTime" column="users_LockTime" />
+			<result property="users_ProTectEMail" column="users_ProTectEMail" />
+			<result property="users_ProtectTel" column="users_ProtectTel" />
+			<result property="users_Exit1" column="users_Exit1" />
+			<result property="users_Exit2" column="users_Exit2" />
+			<result property="users_CheckInStatus" column="users_CheckInStatus" />
+			<result property="users_Weight" column="users_Weight" />
+			<result property="users_ParentId" column="users_ParentId" />
+		</association>
+	</resultMap>
+	<sql id="fenYeSelect">
+	<if test="text1!=null and text1!=''">
+	AND users_LoginName=#{text1}
+	</if>
+	<if test="num1!=null">
+	AND users_Id=#{num1}
+	</if>
+	<if test="num2!=null">
+	AND users_CheckInStatus=#{num2}
+	</if>
+	</sql>
+	<sql id="fenYeSelect2">
+	<if test="text1!='' and text2!='' ">
+	AND checkIn_Time between #{text1} and #{text2}
+	</if>
+	<if test="text1!='' and text2=='' ">
+	AND checkIn_Time >= #{text1}
+	</if>
+	<if test="text2!='' and text1=='' ">
+	AND checkIn_Time &lt;= #{text2}
+	</if>
+	</sql>
+	<select id="getZiXunShiList" resultType="com.xcm.entity.Users" parameterType="com.xcm.entity.PageNation">
+		SELECT *
+		FROM users WHERE users_ParentId=#{num3}
+		<include refid="fenYeSelect"></include>
+		 LIMIT #{page},#{limit}
+	</select>
+	<select id="getZiXunShiCount" resultType="int" parameterType="com.xcm.entity.PageNation">
+		SELECT COUNT(*)
+		FROM users WHERE users_ParentId=#{num3}
+		<include refid="fenYeSelect"></include>
+	</select>
+	<select id="getChekinListById" parameterType="int" resultMap="checkinMap">
+	SELECT * FROM checkin AS c , users AS u WHERE checkIn_UserId=users_Id AND users_Id=#{users_Id}
+	</select>
+	<select id="getChekinListByIdPage" parameterType="com.xcm.entity.PageNation" resultMap="checkinMap">
+	SELECT * FROM checkin AS c , users AS u WHERE checkIn_UserId=users_Id AND users_Id=#{num1} <include refid="fenYeSelect2"></include>
+	</select>
+	<select id="getChekinListByIdCount" parameterType="com.xcm.entity.PageNation" resultType="int">
+	SELECT COUNT(*) FROM checkin AS c , users AS u WHERE checkIn_UserId=users_Id AND users_Id=#{num1} <include refid="fenYeSelect2"></include>
+	</select>
+	<update id="updateOneCheckIn" parameterType="com.xcm.entity.Users">
+	UPDATE users SET users_CheckInStatus=#{users_CheckInStatus} WHERE users_Id=#{users_Id}
+	</update>
+	<select id="selectLastCheckInByUsers_Id" parameterType="int" resultMap="checkinMap">
+	SELECT * FROM checkin AS c , users AS u WHERE checkIn_UserId=users_Id AND users_Id=#{users_Id} ORDER BY checkIn_Id  DESC LIMIT 1
+	</select>
+	<update id="updateCheckInStatus" parameterType="com.xcm.entity.CheckIn">
+	UPDATE checkin SET checkIn_Time =#{checkIn_Time}, checkIn_Status=#{checkIn_Status}, checkIn_Late=#{checkIn_Late} WHERE checkIn_Id=#{checkIn_Id}
+	</update>
+</mapper>
